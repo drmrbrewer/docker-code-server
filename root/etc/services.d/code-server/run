@@ -13,13 +13,15 @@ else
     PROXY_DOMAIN_ARG="--proxy-domain=${PROXY_DOMAIN}"
 fi
 
+# MRB commented out the `s6-setuidgid abc` line... s6-setuidgid runs the command as another user (abc) but we want to run it as root...
+# MRB also changed all `/config` to `/root` because it's a lot easier to have everything in the normal home folder...
 exec \
-    s6-setuidgid abc \
+#    s6-setuidgid abc \
         /usr/local/bin/code-server \
             --bind-addr 0.0.0.0:8443 \
-            --user-data-dir /config/data \
-            --extensions-dir /config/extensions \
+            --user-data-dir /root/data \
+            --extensions-dir /root/extensions \
             --disable-telemetry \
             --auth "${AUTH}" \
             "${PROXY_DOMAIN_ARG}" \
-            /config/workspace
+            /root/workspace
