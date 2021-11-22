@@ -8,7 +8,8 @@ LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DA
 LABEL maintainer="aptalca"
 
 # environment settings
-ENV HOME="/config"
+# MRB changed HOME from `/config` to `/root` because it's a lot easier to have everything in the normal home folder...
+ENV HOME="/root"
 
 RUN \
   echo "**** install node repo ****" && \
