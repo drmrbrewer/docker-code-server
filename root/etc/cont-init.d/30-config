@@ -1,22 +1,28 @@
 #!/usr/bin/with-contenv bash
 
-mkdir -p /config/{extensions,data,workspace,.ssh}
+# MRB changed this to /root from /config
+mkdir -p /root/{extensions,data,workspace,.ssh}
 
-if [ -n "${SUDO_PASSWORD}" ] || [ -n "${SUDO_PASSWORD_HASH}" ]; then
-    echo "setting up sudo access"
-    if ! grep -q 'abc' /etc/sudoers; then
-        echo "adding abc to sudoers"
-        echo "abc ALL=(ALL:ALL) ALL" >> /etc/sudoers
-    fi
-    if [ -n "${SUDO_PASSWORD_HASH}" ]; then
-        echo "setting sudo password using sudo password hash"
-        sed -i "s|^abc:\!:|abc:${SUDO_PASSWORD_HASH}:|" /etc/shadow
-    else
-        echo "setting sudo password using SUDO_PASSWORD env var"
-        echo -e "${SUDO_PASSWORD}\n${SUDO_PASSWORD}" | passwd abc
-    fi
-fi
+# MRB added the following to uncomment the `force_color_prompt` line in .bashrc to give coloured prompts by default in bash terminals...
+sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
+
+# MRB commented out the rest of the file... no need for SUDO when user is now root rather than abc, and also no need to change owner to abc...
+
+# if [ -n "${SUDO_PASSWORD}" ] || [ -n "${SUDO_PASSWORD_HASH}" ]; then
+#     echo "setting up sudo access"
+#     if ! grep -q 'abc' /etc/sudoers; then
+#         echo "adding abc to sudoers"
+#         echo "abc ALL=(ALL:ALL) ALL" >> /etc/sudoers
+#     fi
+#     if [ -n "${SUDO_PASSWORD_HASH}" ]; then
+#         echo "setting sudo password using sudo password hash"
+#         sed -i "s|^abc:\!:|abc:${SUDO_PASSWORD_HASH}:|" /etc/shadow
+#     else
+#         echo "setting sudo password using SUDO_PASSWORD env var"
+#         echo -e "${SUDO_PASSWORD}\n${SUDO_PASSWORD}" | passwd abc
+#     fi
+# fi
 
 # permissions
-chown -R abc:abc \
-    /config
+# chown -R abc:abc \
+#     /config
