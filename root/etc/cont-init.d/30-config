@@ -24,6 +24,11 @@ sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
 #     fi
 # fi
 
+[[ ! -f /config/.bashrc ]] && \
+    cp /root/.bashrc /config/.bashrc
+[[ ! -f /config/.profile ]] && \
+    cp /root/.profile /config/.profile
+
 # permissions
 # chown -R abc:abc \
 #     /config
