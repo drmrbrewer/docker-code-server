@@ -1,7 +1,8 @@
 #!/usr/bin/with-contenv bash
 
 # MRB changed this to /root from /config
-mkdir -p /root/{extensions,data,workspace,.ssh}
+# MRB also removed {extensions,data} because these are no longer used as custom directories in the run script... all goes in default /root/.local/share/code-server
+mkdir -p /root/{workspace,.ssh}
 
 # MRB added the following to uncomment the `force_color_prompt` line in .bashrc to give coloured prompts by default in bash terminals...
 sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
