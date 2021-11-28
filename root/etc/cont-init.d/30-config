@@ -7,6 +7,14 @@ mkdir -p /root/{workspace,.ssh}
 # MRB added the following to uncomment the `force_color_prompt` line in .bashrc to give coloured prompts by default in bash terminals...
 sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
 
+# install later version of node.js so that it's available in the IDE...
+# to do this more how the linuxserver devs intended, may be better to use separate scripts in here as per the "official" node.js mod:
+#   https://github.com/linuxserver/docker-mods/tree/code-server-nodejs/root/etc/cont-init.d
+# I think these are just run in order (before the run script defined here in /root/etc/services.d/code-server/run)
+# so it ultimately doesn't make any difference... could also try putting this in the Dockerfile directly, perhaps *after* code-server
+# is installed, because code-server currently expects node 14: https://coder.com/docs/code-server/latest/npm#nodejs-version
+curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt-get update && apt-get install -y nodejs
+
 # MRB commented out the rest of the file... no need for SUDO when user is now root rather than abc, and also no need to change owner to abc...
 # MRB and also not using /config as HOME folder (using /root) so no need to copy over .bashrc
 
